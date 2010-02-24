@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+from zlib import crc32
+import sys
+import struct
+
+if __name__ == '__main__':
+	if len(sys.argv) != 3:
+		print "Usage:", sys.argv[0], "input_file output_file"
+		sys.exit(2)
+
+	print "Using input_file =", sys.argv[1]
+	print "Using output_file =", sys.argv[2]
+
+	input_file = open(sys.argv[1], 'r')
+	output_file = open(sys.argv[2], 'w')
+
+	uboot_data = input_file.read()
+	uboot_crc = crc32(uboot_data)
+
+	# write 4 bytes, representing bootloader's size, Little Endian
+	output_file.write(struct.pack ("<i", len(uboot_data)))
+	# write 4 bytes, representing bootloader's crc32, Little Endian
+	output_file.write(struct.pack ("<i", uboot_crc))
+	# write bootloader itself
+	output_file.write(uboot_data)
+
+	input_file.close()
+	output_file.close()
+

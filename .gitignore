@@ -6,5 +6,4 @@ stage1.bin
 stage1.elf
 stage1.elf.map
 tools/installer
-tools/packager
 tools/update_header
