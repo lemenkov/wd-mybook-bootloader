@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# This script adds prefixed size and CRC to u-boot binary
+
 from zlib import crc32
 import sys
 import struct
