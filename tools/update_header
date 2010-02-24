@@ -1,0 +1,63 @@
+#!/usr/bin/python
+
+from zlib import crc32
+import sys
+import struct
+
+NUMBER_VECTORS = 12
+SIZEOF_INT = 4
+
+if __name__ == '__main__':
+	if len(sys.argv) != 3:
+		print "Usage:", sys.argv[0], "input_file output_file"
+		sys.exit(2)
+
+	print "Using input_file =", sys.argv[1]
+	print "Using output_file =", sys.argv[2]
+
+	input_file = open(sys.argv[1], 'r')
+	output_file = open(sys.argv[2], 'w')
+
+	img_header = {'sizeof':(NUMBER_VECTORS+3)*SIZEOF_INT}
+
+	img_header['start_vector'] = struct.unpack('l'*NUMBER_VECTORS, input_file.read(SIZEOF_INT*NUMBER_VECTORS))
+	(img_header['length'],) = struct.unpack('l', input_file.read(SIZEOF_INT))
+	(img_header['img_CRC'],) = struct.unpack('l', input_file.read(SIZEOF_INT))
+	(img_header['CRC'],) = struct.unpack('l', input_file.read(SIZEOF_INT))
+
+	bootloader = input_file.read()
+
+	# Fix bootloader's length
+	if len(bootloader) != img_header['length']:
+		print "size in header:", str(img_header['length']), ", size of file:", str(len(bootloader))
+
+	# Fix bootloader CRC - actually, there is an issue with computing CRC here
+	#crc = crc32(bootloader)
+	crc = crc32(bootloader[:img_header['length']-len(bootloader)])
+	if crc != img_header['img_CRC']:
+		print "New bootloader CRC:", str(hex(crc&0xFFFFFFFF)), "(was:", str(hex(img_header['img_CRC']&0xFFFFFFFF)), ")"
+		img_header['img_CRC'] = crc;
+
+	# Fix header CRC
+	newbuf = ''
+	for vect in img_header['start_vector']:
+		newbuf += struct.pack ("<l", vect)
+	newbuf += struct.pack ("<l", img_header['length'])
+	newbuf += struct.pack ("<l", img_header['img_CRC'])
+	crc = crc32(newbuf)
+	if crc != img_header['CRC']:
+		print "New header CRC:", str(hex(crc&0xFFFFFFFF)), "(was:", str(hex(img_header['CRC']&0xFFFFFFFF)), ")"
+		img_header['CRC'] = crc;
+
+	# write header
+	for vect in img_header['start_vector']:
+		output_file.write(struct.pack ("<l", vect))
+	output_file.write(struct.pack ("<l", img_header['length']))
+	output_file.write(struct.pack ("<l", img_header['img_CRC']))
+	output_file.write(struct.pack ("<l", img_header['CRC']))
+
+	# write bootloader itself
+	output_file.write(bootloader)
+
+	input_file.close()
+	output_file.close()

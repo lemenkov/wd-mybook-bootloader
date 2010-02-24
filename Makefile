@@ -73,12 +73,9 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.S Makefile
 	sed 's,\(.*\)\.o[ :]*,$(OBJDIR)/\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
-stage1.bin: stage1.elf ./tools/update_header
+stage1.bin: stage1.elf
 	$(OBJCOPY) $(OBJCOPYFLAGS) stage1.elf stage1.bin
-	./tools/update_header stage1.bin 
-
-./tools/update_header : ./tools/update_header.c tools/Makefile
-	$(MAKE)  -C ./tools
+	./tools/update_header stage1.bin stage1.bin.fixed
 
 stage1.elf: $(STAGE1_OBJECTS) linkfile 
 	$(LD) $(LDOPTS) -T linkfile $(STAGE1_OBJECTS) -o $@ > $@.map

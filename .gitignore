@@ -3,6 +3,6 @@
 *.o
 obj/
 stage1.bin
+stage1.bin.fixed
 stage1.elf
 stage1.elf.map
-tools/update_header
