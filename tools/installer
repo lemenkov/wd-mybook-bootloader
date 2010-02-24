@@ -1,0 +1,37 @@
+#!/usr/bin/python
+
+from zlib import crc32
+import sys
+import struct
+
+SECTOR_START = 1
+SECTOR_LENGTH = 0x7C00
+
+if __name__ == '__main__':
+	if len(sys.argv) != 3:
+		print "Usage:"
+		print "dd if=/dev/sda of=./bootsector.in count=1 bs=512"
+		print sys.argv[0], "bootsector.in bootsector.out"
+		print "dd if=./bootsector.out of=/dev/sda count=1 bs=512"
+		sys.exit(2)
+
+	print "Using as bootsector.in =", sys.argv[1]
+	print "Using as bootsector.out =", sys.argv[2]
+
+	input_file = open(sys.argv[1], 'r')
+	output_file = open(sys.argv[2], 'w')
+
+	bootsector = input_file.read()
+
+	# copy bootsector data as is
+	output_file.write(bootsector)
+
+	# fix MBR
+	output_file.seek(0x1b0)
+	output_file.write(struct.pack ("<i", SECTOR_START + SECTOR_LENGTH))
+	output_file.write(struct.pack ("<i", SECTOR_START))
+	output_file.write(struct.pack ("<i", SECTOR_LENGTH))
+
+	input_file.close()
+	output_file.close()
+

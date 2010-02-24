@@ -5,5 +5,4 @@ obj/
 stage1.bin
 stage1.elf
 stage1.elf.map
-tools/installer
 tools/update_header

@@ -13,15 +13,15 @@ CC = gcc
 CFLAGS = -c -v -g -I . -I ../include
 
 
-all : installer update_header
+all : update_header
 
 clean :
 	rm -f  *.o
 	rm -f *.d
-	rm -f installer update_header
+	rm -f update_header
 
 OBJECTS =  crc32.o
-SOURCES = ../src/crc32.c installer.c update_header.c
+SOURCES = ../src/crc32.c update_header.c
 DEPENDS = $(SOURCES:.c=.d)
 
 include $(DEPENDS)
@@ -35,10 +35,6 @@ include $(DEPENDS)
 
 %.o : %.c %.d
 	$(CC) $(CFLAGS) $< -o $@
-
-
-installer : installer.o
-	$(LD) $(LDOPTS) installer.o -o $@
 
 update_header : $(OBJECTS) update_header.o
 	$(LD) $(OBJECTS) $(LDOPTS) update_header.o -o $@
