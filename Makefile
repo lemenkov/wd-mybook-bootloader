@@ -95,6 +95,6 @@ clean :
 	@rm -f $(SRCDIR)/*.d
 	@rm -rf $(OBJDIR)
 	@rm -f stage1.bin
+	@rm -f stage1.bin.fixed
 	@rm -f stage1.elf
 	@rm -f stage1.elf.map
-	$(MAKE) -C ./tools clean
