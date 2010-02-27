@@ -11,7 +11,7 @@
  * Copyright:       Oxford Semiconductor Ltd, 2005
  *
  *
- * 
+ *
  *******************************************************************/
 
 #include "oxnas.h"
@@ -22,13 +22,13 @@
  *
  * Function:             encode_control_status
  *
- * Description:          DMA controller control status creating function 
- *                       probably over complex for this application - 
+ * Description:          DMA controller control status creating function
+ *                       probably over complex for this application -
  *                       we need simple device to memory transfer for SATA to memory.
  *                       memory to device and device to memory for encryption/decryption of memory.
- *  
  *
- * 
+ *
+ *
  ******************************************************************/
 unsigned long encode_control_status(oxnas_dma_device_settings_t *
 				    src_settings,
@@ -171,7 +171,7 @@ u32 encode_final_eot(oxnas_dma_device_settings_t * src_settings,
  * Function:             encode_start
  *
  * Description:          encode the start command
- * 
+ *
  ******************************************************************/
 u32 encode_start(u32 ctrl_status)
 {

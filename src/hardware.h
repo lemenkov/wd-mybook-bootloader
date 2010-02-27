@@ -1,5 +1,5 @@
-@ Hardware description file for inclusion in assembler source 
-@ 
+@ Hardware description file for inclusion in assembler source
+@
 @Title hardware.h @ Author:John Larkworthy
 @ (c) Oxford Semiconductors Ltd 2005.
 @ *********************************************

@@ -12,24 +12,24 @@
  *	Modifications:
  *		BHC: 24/05/06	Reworked to add stage2 loader environment load from disk
  *      JJL: 21/07/06   Restructured to provide space for boot loader validation
- */	
+ */
 .section .init
 .org 0
 	ldr pc, = start
 
-.org 0x30 
+.org 0x30
 image_length: .word code_length
 image_crc: .word 0
 header_crc: .word 0
 
-.section .text	
+.section .text
 /* end of header so start code here
  */
 .set GPIO_B_SET,  0x41100014
 
 start:
 /* remove PENDING reset triggered in the bootrom when program starts (bootrom coding error!)*/
-	ldr 	r0, = 0x4
+	ldr	r0, = 0x4
 	ldr	r1, = GPIO_B_SET
 	str	r0, [r1]
 	ldr	r13,	initial_stack

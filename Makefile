@@ -1,4 +1,4 @@
-# Initial Makefile to create the second stage loader from sources 
+# Initial Makefile to create the second stage loader from sources
 # stored in SRC directory
 # J J Larkworthy 20 March 2006
 #********************************************************************
@@ -29,13 +29,13 @@ OBJCOPYFLAGS    = -O binary -R .note -R .comment -S
 OBJDIR = ./obj
 SRCDIR = ./src
 
-OBJECTS = $(AOBJECTS) $(COBJECTS) 
+OBJECTS = $(AOBJECTS) $(COBJECTS)
 
 COBJECTS =  $(OBJDIR)/stage1.o $(OBJDIR)/sata.o $(OBJDIR)/ns16550.o $(OBJDIR)/debug.o $(OBJDIR)/crc32.o
 
 STAGE1_OBJECTS = $(OBJDIR)/start.o $(OBJDIR)/stage1.o $(OBJDIR)/sata.o $(OBJDIR)/dma.o \
                 $(OBJDIR)/ns16550.o $(OBJDIR)/debug.o $(OBJDIR)/crc32.o $(OBJDIR)/build.o
-	
+
 AOBJECTS = $(OBJDIR)/start.o
 
 all : stage1.bin $(OBJDIR)/.
@@ -58,7 +58,7 @@ stage1.bin: stage1.elf
 	$(OBJCOPY) $(OBJCOPYFLAGS) stage1.elf stage1.bin
 	./tools/update_header stage1.bin stage1.bin.fixed
 
-stage1.elf: $(STAGE1_OBJECTS) linkfile 
+stage1.elf: $(STAGE1_OBJECTS) linkfile
 	$(LD) $(LDOPTS) -T linkfile $(STAGE1_OBJECTS) -o $@ > $@.map
 
 .PHONY : .lastmake
@@ -67,7 +67,6 @@ $(OBJDIR)/build.o : .lastmake
 
 $(OBJDIR)/. :
 	mkdir $(OBJDIR)
-	
 
 sources = $(COBJECTS:$(OBJDIR)%.o=$(SRCDIR)%.c)
 include $(sources:.c=.d)

@@ -2,7 +2,7 @@
  *
  * File:            oxnas.h
  *
- * Description:     oxnas configuration header file 
+ * Description:     oxnas configuration header file
  *
  * Date:            27 July 2005
  *
@@ -35,7 +35,7 @@
 #define ROM_BASE                0x40000000
 #define USB_BASE                0x40200000
 #define MAC_BASE                0x40400000
-#define PCI_CSRS_BASE           0x40600000      
+#define PCI_CSRS_BASE           0x40600000
 #define PCI_BASE                0x40800000
 
 #define STATIC_CS0_BASE         0x41000000

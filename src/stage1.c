@@ -1,8 +1,8 @@
-/* test program to display a banner when loaded and executed. 
- * It reports where the 'send_banner'function is currently loaded. 
- * 
+/* test program to display a banner when loaded and executed.
+ * It reports where the 'send_banner'function is currently loaded.
+ *
  * J J Larkworthy 20 April 2006
- * 
+ *
  */
 #include "oxnas.h"
 #include "sata.h"
@@ -380,9 +380,9 @@ static void start_timer(void)
     /* enable clock in sys_ctrl at 5MHz */
     writel(SLOW_TIMER_TICK, C_SYSCTRL_CKCTRL_CTRL_ADDR);
 
-    /* set timer 1 arps running free running prescale = 255 
-     * tick = 51us 
-     * maximum time out 3 seconds 
+    /* set timer 1 arps running free running prescale = 255
+     * tick = 51us
+     * maximum time out 3 seconds
      */
     writel(RPS_CLK_CTRL_DATA, RPSA_CLK_CTRL);
 }
@@ -392,10 +392,10 @@ static void start_timer(void)
  *
  * Function:             time_now
  *
- * Description:          function to return the time in seconds 
- *                       from an internal source 
- * 
- * Note: RPS clock counts down so change to an up clock 
+ * Description:          function to return the time in seconds
+ *                       from an internal source
+ *
+ * Note: RPS clock counts down so change to an up clock
  ******************************************************************/
 u32 time_now(void)
 {
@@ -406,7 +406,7 @@ u32 time_now(void)
  *
  * Function:             udelay
  *
- * Description:          function to pause operation in a busy wait 
+ * Description:          function to pause operation in a busy wait
  *                       for a number of microseconds.
  *
  ******************************************************************/

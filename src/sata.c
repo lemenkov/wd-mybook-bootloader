@@ -11,10 +11,10 @@
  * Copyright:       Oxford Semiconductor Ltd, 2005
  *
  *
- * Verifies that the external FLASH image is intact before copying the 
- * executable for the LEON coprocessor into SRAM. 
+ * Verifies that the external FLASH image is intact before copying the
+ * executable for the LEON coprocessor into SRAM.
  * Then the arm processor is allowed to execute the code in FLASH.
- * 
+ *
  *******************************************************************/
 /*  SATA boot loader.
  * should initialise sata controller and external phy before loading first segment.
@@ -22,9 +22,9 @@
  * sector in our case, and the partition table. The partition table is used
  * by the final OS to establish which partition contains what.
  *
- * From the first sector establish where the boot image lies on the disk and 
- * how bit then copy into the SRAM from the begining. 
- * 
+ * From the first sector establish where the boot image lies on the disk and
+ * how bit then copy into the SRAM from the begining.
+ *
  */
 
 #include "types.h"
@@ -41,7 +41,7 @@
 #define CFG_ATA_ALT_OFFSET  0
 
 
-#define printf(A) 
+#define printf(A)
 
 
 /* The internal SATA drive on which we should attempt to find partitions */
@@ -64,7 +64,7 @@ static const int MAX_NOT_BUSY_LOOPS = 10000;
 
 
 
-/* static data controlling the operation of the DMA controller in this 
+/* static data controlling the operation of the DMA controller in this
  * application.
  */
 static oxnas_dma_device_settings_t oxnas_sata_dma_settings;
@@ -103,19 +103,19 @@ unsigned char oxnas_sata_inb(int device, int port);
 
 #define PHY_RESET_FAIL               1
 #define PHY_2ND_RESET_FAIL           2
-#define PROG_READ_FAILURE            4  
+#define PROG_READ_FAILURE            4
 #define SECTOR_0_READ_FAIL           8
 #define FAULT_LEDS                0x3FF
 
-#if 0 
+#if 0
 static void fault(u8 code)
 {
-#if 0	
+#if 0
    /* set a warning bit in GPIO'S */
     writel(code, GPIO_A_OE_VAL);
     /* now enable GPIO for output */
     writel(FAULT_LEDS, GPIO_A_SET_OE);
-#endif    
+#endif
 }
 #endif
 /* memory copy - don't use standard library so need our own implimentation */
@@ -159,7 +159,7 @@ static u8 ide_wait(int dev, u32 t)
 /* code not needed as communications with the disk drive has been established by
  * the boot rom
  */
- 
+
 /* read a SATA control register */
 static u32 scr_read(int device, unsigned int sc_reg)
 {
@@ -470,7 +470,7 @@ void dma_sata_start(void)
 		      (SATA_DMA_CHANNEL, DMA_CTRL_STATUS)));
 }
 
-/* configure the DMA controller to transfer data from the IDE controller data 
+/* configure the DMA controller to transfer data from the IDE controller data
  * buffers into memory.
  */
 static void dma_start_sata_read(u32 * buffer, int num_bytes)
@@ -629,13 +629,12 @@ static int phy_reset(int device)
 
 static int wait_fis(void)
 {
-	
     /* Wait for upto 10 seconds for FIS to be received */
     int fis_status = 0;
     int loops = 0;
     do {
 	udelay(200000);
-	if 	(ide_inb(0, ATA_SECT_CNT) > 0) {
+	if (ide_inb(0, ATA_SECT_CNT) > 0) {
 	    fis_status = 1;
 	    break;
 	}
@@ -651,7 +650,7 @@ static int wait_fis(void)
 
 u32 run_sata(u32 location, u32 length, u32* memory_location, int disk)
 {
-    /* initialise static data and set pointers to SATA input port. 
+    /* initialise static data and set pointers to SATA input port.
      * obtain the currently active port from status report
      * or use SATA 0 for version 0006 of the bootrom ASIC build .
      */
@@ -669,7 +668,7 @@ u32 run_sata(u32 location, u32 length, u32* memory_location, int disk)
     wr_sata_orb3 = 0;
     wr_sata_orb4 = 0;
 
-    	if (0==phy_reset(0)) return 0;
+	if (0==phy_reset(0)) return 0;
 	wait_fis();
 	/* now get the real data */
 
