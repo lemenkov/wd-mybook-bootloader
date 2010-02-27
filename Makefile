@@ -11,7 +11,6 @@
 BUILD_TIME := "$(shell date)"
 
 # architecture set up options.
-ARCH		?= arm
 CROSS_COMPILE ?= arm-linux-gnu-
 PLL400 ?= 400000000
 OVERCLOCK_PLL ?= 0
@@ -20,26 +19,8 @@ OVERCLOCK_PLL ?= 0
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
 CC		= $(CROSS_COMPILE)gcc
-CPP		= $(CC) -E
-AR		= $(CROSS_COMPILE)ar
-NM		= $(CROSS_COMPILE)nm
-STRIP		= $(CROSS_COMPILE)strip
 OBJCOPY		= $(CROSS_COMPILE)objcopy
-OBJDUMP		= $(CROSS_COMPILE)objdump
-AWK		= awk
-GENKSYMS	= scripts/genksyms/genksyms
-DEPMOD		= /sbin/depmod
-KALLSYMS	= scripts/kallsyms
-PERL		= perl
-CHECK		= sparse
-CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__
-MODFLAGS	= -DMODULE
-#CFLAGS_MODULE   = $(MODFLAGS)
-#AFLAGS_MODULE   = $(MODFLAGS)
-LDFLAGS_MODULE  = -r
 ASFLAGS         = -mapcs-32 -g
-CFLAGS_KERNEL	= 
-AFLAGS_KERNEL	=
 INCLUDE         = -Iinclude
 LDOPTS          = -M -nostdlib --verbose --gc-sections
 CCOPTS          = -DNOMINAL_PLL400_FREQ=$(PLL400) -DOVERCLOCK_PLL=$(OVERCLOCK_PLL) $(INCLUDE) -O2 -c -x c -ffunction-sections -fdata-sections -Wall -Werror -ggdb -DBUILD_DATE='$(BUILD_TIME)'
