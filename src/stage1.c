@@ -58,7 +58,7 @@ int main(void)
            SYS_CTRL_GPIO_PRIMSEL_CTRL1);
 
     ddr_control = 0;
-    stage2_size = 100000;
+    stage2_size = 120000;
     stage2ImageNumber = 0;
     stage2_ram_addr = 0x48d00000;
     header_length = (u32 *) (stage2_ram_addr - 8);
